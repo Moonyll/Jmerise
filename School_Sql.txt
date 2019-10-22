@@ -1,0 +1,297 @@
+INSERT INTO `subjectName `(`subjectName`)
+VALUE
+('Maths'),
+('Sport'),
+('Français'),
+('Anglais'),
+('Histoire'),
+('Géographie');
+
+CLASSES
+************
+INSERT INTO `classes`( `className`, `idProfessor`)
+VALUE
+('CP',1),
+('CE1',1),
+('CE2',1),
+('CM1',1),
+('CM2',1);
+
+*************
+
+PROFESSORS
+************
+INSERT INTO `professor`(`professorLastName`,`professorFirstName`,`professorEMail`,`idClass`)
+VALUE
+('Doe','John','johndoe@kill.com', NULL),
+('Black','Jack','jackblack@win.com', NULL),
+('The Cat','Felix','felixthecat@miaou.com', NULL),
+('Moore','No','nomoore@bye.com', NULL),
+('Wars','Star','starwars@jedi.com',NULL);
+***************
+
+STUDENTS
+************
+INSERT INTO `students`(`studentLastName`,`studentFirstName`,`idClass`)
+VALUE
+('lastname_pupil01','firstname_pupil01','2'),
+('lastname_pupil02','firstname_pupil02','4'),
+('lastname_pupil03','firstname_pupil03','1'),
+('lastname_pupil04','firstname_pupil04','3'),
+('lastname_pupil05','firstname_pupil05','3'),
+('lastname_pupil06','firstname_pupil06','4'),
+('lastname_pupil07','firstname_pupil07','2'),
+('lastname_pupil08','firstname_pupil08','1'),
+('lastname_pupil09','firstname_pupil09','2'),
+('lastname_pupil10','firstname_pupil10','1'),
+('lastname_pupil11','firstname_pupil11','5'),
+('lastname_pupil12','firstname_pupil12','1'),
+('lastname_pupil13','firstname_pupil13','3'),
+('lastname_pupil14','firstname_pupil14','4'),
+('lastname_pupil15','firstname_pupil15','1'),
+('lastname_pupil16','firstname_pupil16','1'),
+('lastname_pupil17','firstname_pupil17','1'),
+('lastname_pupil18','firstname_pupil18','5'),
+('lastname_pupil19','firstname_pupil19','2'),
+('lastname_pupil20','firstname_pupil20','2'),
+('lastname_pupil21','firstname_pupil21','1'),
+('lastname_pupil22','firstname_pupil22','2'),
+('lastname_pupil23','firstname_pupil23','5'),
+('lastname_pupil24','firstname_pupil24','5'),
+('lastname_pupil25','firstname_pupil25','5'),
+('lastname_pupil26','firstname_pupil26','4'),
+('lastname_pupil27','firstname_pupil27','4'),
+('lastname_pupil28','firstname_pupil28','2'),
+('lastname_pupil29','firstname_pupil29','4'),
+('lastname_pupil30','firstname_pupil30','3');
+
+***************
+
+NOTES
+************
+INSERT INTO `notes`(`valueNote`,`idStudent`,`idSubject`)
+VALUE
+(6,2,3),
+(16,2,4),
+(15,3,6),
+(11,3,5),
+(7,4,5),
+(8,5,4),
+(10,5,5),
+(11,5,2),
+(3,6,5),
+(15,6,3),
+(19,7,3),
+(10,7,6),
+(4,8,1),
+(19,8,2),
+(4,9,3),
+(20,11,6),
+(20,11,3),
+(6,11,1),
+(2,12,3),
+(9,12,4),
+(13,12,2),
+(16,13,2),
+(10,13,6),
+(2,15,6),
+(0,16,2),
+(19,16,3),
+(18,16,4),
+(10,16,1),
+(18,17,2),
+(2,17,4),
+(4,18,1),
+(10,19,1),
+(1,20,6),
+(10,20,4),
+(5,22,5),
+(20,22,6),
+(6,23,2),
+(4,24,1),
+(15,24,6),
+(19,25,2),
+(8,25,4),
+(5,26,2),
+(2,26,5),
+(20,26,3),
+(1,27,6),
+(19,27,2),
+(5,28,1),
+(13,28,5),
+(13,29,4),
+(3,30,1);
+
+**************
+SELECT studentLastName,studentFirstName,subjectName,valueNote,className,professorLastName
+FROM notes
+INNER JOIN students ON notes.idStudent = students.idStudent
+INNER JOIN subject ON notes.idSubject = subject.idSubject
+INNER JOIN classes ON students.idClass = classes.idClass
+INNER JOIN professor ON classes.idClass = professor.idClass
+
+ORDER BY studentLastName ASC
+
+MOYENNE / STD
+***********************
+SELECT studentLastName,studentFirstName, ROUND(AVG(valueNote),2),className,professorLastName
+FROM notes
+INNER JOIN students ON notes.idStudent = students.idStudent
+INNER JOIN classes ON students.idClass = classes.idClass
+INNER JOIN professor ON classes.idClass = professor.idClass
+
+GROUP BY studentLastName
+ORDER BY studentLastName ASC
+
+EXEMPLE INNER JOIN
+****************************
+SELECT *
+FROM table1
+INNER JOIN table2 ON table1.id = table2.fk_id
+
+PROF / STD
+*************************
+SELECT professorLastName,professorFirstName,className, studentLastName,studentFirstName
+
+FROM professor
+
+INNER JOIN classes ON professor.idProfessor = classes.idProfessor
+INNER JOIN students ON classes.idClass = students.idClass
+
+
+ORDER BY studentLastName ASC
+
+*********************
+DOCTOR OFFICE
+*********************
+
+INSERT INTO `speciality`(`specialityName`)
+VALUE
+('Généraliste'),
+('Neurologue'),
+('Oncologue');
+
+
+******************
+INSERT INTO `doctor`(`doctorLastName`,`doctorFirstName`,`eMail`,`idSpeciality`)
+VALUE
+('Lee','Stan','stanlee@marvel.com',1), 
+('Campbell','Bruce','ashversus@evildead.com',2),
+('The Dragon','Smaug','whereismymoney@hobbit.com',3),
+('Willis','Bruce','diehard@ipikaye.com',1),
+('More','No','emptyshell@whereyouare.com',2);
+
+
+PATIENT
+*****************
+INSERT INTO `patient`(`patientLastName`,`patientFirstName`,`patientDateOfBirth`)
+VALUE
+
+('lastname_patient01','firstname_patient01','1975/01/11'),
+('lastname_patient02','firstname_patient02','1978/12/01'),
+('lastname_patient03','firstname_patient03','1993/08/03'),
+('lastname_patient04','firstname_patient04','1911/09/01'),
+('lastname_patient05','firstname_patient05','1950/02/02'),
+('lastname_patient06','firstname_patient06','1989/01/07'),
+('lastname_patient07','firstname_patient07','1980/05/05'),
+('lastname_patient08','firstname_patient08','1976/04/23'),
+('lastname_patient09','firstname_patient09','1989/10/11'),
+('lastname_patient10','firstname_patient10','1956/01/16'),
+('lastname_patient11','firstname_patient11','1975/11/04'),
+('lastname_patient12','firstname_patient12','1947/12/01'),
+('lastname_patient13','firstname_patient13','1956/07/05'),
+('lastname_patient14','firstname_patient14','1978/05/07'),
+('lastname_patient15','firstname_patient15','1990/07/08'),
+('lastname_patient16','firstname_patient16','1879/01/15'),
+('lastname_patient17','firstname_patient17','1975/03/07'),
+('lastname_patient18','firstname_patient18','1973/05/23'),
+('lastname_patient19','firstname_patient19','1970/04/19'),
+('lastname_patient20','firstname_patient20','1977/07/01');
+
+
+RDV
+************
+
+INSERT INTO `appointment`(`dateApppointment`,`timeAppointment`,`idDoctor`,`idPatient`)
+VALUE
+
+('2019/06/01','09:00:00',2,1),
+('2019/05/22','09:00:00',4,2),
+('2019/02/15','09:00:00',4,3),
+('2019/02/13','09:00:00',5,4),
+('2019/04/28','09:00:00',5,5),
+('2019/03/15','09:00:00',5,6),
+('2019/02/04','10:00:00',1,7),
+('2019/08/27','10:00:00',4,8),
+('2019/04/15','10:00:00',3,9),
+('2019/06/27','14:00:00',1,10),
+('2019/09/30','14:00:00',1,11),
+('2019/07/02','14:00:00',4,12),
+('2019/08/15','15:00:00',3,13),
+('2019/05/08','16:00:00',3,14),
+('2019/03/03','16:00:00',3,15),
+('2019/08/20','17:00:00',2,16),
+('2019/08/07','17:00:00',1,17),
+('2019/09/22','17:00:00',4,18),
+('2019/05/23','12:00:00',5,19),
+('2019/01/12','12:00:00',3,20),
+('2019/01/17','19:00:00',2,1),
+('2019/01/10','19:00:00',5,2),
+('2019/12/12','10:00:00',2,3),
+('2019/11/11','09:00:00',5,4),
+('2019/04/08','12:00:00',2,5),
+('2019/09/09','15:00:00',3,6),
+('2019/06/25','16:00:00',1,7),
+('2019/07/27','17:00:00',2,8),
+('2019/07/09','18:00:00',1,9),
+('2019/02/15','09:00:00',1,10);
+
+
+RDV / OFFICE
+******
+SELECT dateApppointment,timeAppointment,patientLastName,patientFirstName,
+doctorLastName,doctorFirstName, specialityName
+FROM appointment
+
+INNER JOIN patient ON appointment.idPatient = patient.idPatient
+INNER JOIN doctor ON appointment.idDoctor = doctor.idDoctor
+INNER JOIN speciality ON doctor.idSpeciality = speciality.idSpeciality
+
+RDV / DCT
+******
+SELECT
+
+doctorLastName,
+dateApppointment as RDV,
+timeAppointment as Créneau Horaire,
+patientLastName as Nom du Patient,
+patientFirstName as Prénom du Patient
+
+FROM appointment
+
+INNER JOIN patient ON appointment.idPatient = patient.idPatient
+INNER JOIN doctor ON appointment.idDoctor = doctor.idDoctor
+
+ORDER BY doctorLastName
+
+RDV / PA
+******
+SELECT
+
+patientLastName as Nom,
+patientFirstName as Prénom,
+dateApppointment as RDV,
+timeAppointment as Horaire,
+doctorLastName as Docteur,
+specialityName as Service
+
+FROM appointment
+
+INNER JOIN patient ON appointment.idPatient = patient.idPatient
+INNER JOIN doctor ON appointment.idDoctor = doctor.idDoctor
+INNER JOIN speciality ON doctor.idSpeciality = speciality.idSpeciality
+
+ORDER BY patientLastName
+
+
+

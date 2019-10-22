@@ -1,0 +1,102 @@
+------------------------------------------------------------
+#        Script MySQL.
+#------------------------------------------------------------
+
+
+#------------------------------------------------------------
+# Table: subject
+#------------------------------------------------------------
+
+CREATE TABLE subject(
+        idSubject   Int  Auto_increment  NOT NULL ,
+        subjectName Varchar (50) NOT NULL
+	,CONSTRAINT subject_PK PRIMARY KEY (idSubject)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: students
+#------------------------------------------------------------
+
+CREATE TABLE students(
+        idStudent        Int  Auto_increment  NOT NULL ,
+        studentLastName  Varchar (50) NOT NULL ,
+        studentFirstName Varchar (50) NOT NULL ,
+        idClass          Int NOT NULL
+	,CONSTRAINT students_PK PRIMARY KEY (idStudent)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: professor
+#------------------------------------------------------------
+
+CREATE TABLE professor(
+        idProfessor        Int  Auto_increment  NOT NULL ,
+        professorLastName  Varchar (50) NOT NULL ,
+        professorFirstName Varchar (50) NOT NULL ,
+        professorEMail     Varchar (50) NOT NULL ,
+        idClass            Int NOT NULL
+	,CONSTRAINT professor_PK PRIMARY KEY (idProfessor)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: classes
+#------------------------------------------------------------
+
+CREATE TABLE classes(
+        idClass     Int  Auto_increment  NOT NULL ,
+        className   Varchar (3) NOT NULL ,
+        idProfessor Int NOT NULL
+	,CONSTRAINT classes_PK PRIMARY KEY (idClass)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: notes
+#------------------------------------------------------------
+
+CREATE TABLE notes(
+        idNotes   Int  Auto_increment  NOT NULL ,
+        valueNote Int NOT NULL ,
+        idStudent Int NOT NULL ,
+        idSubject Int NOT NULL
+	,CONSTRAINT notes_PK PRIMARY KEY (idNotes)
+)ENGINE=InnoDB;
+
+
+
+
+ALTER TABLE students
+	ADD CONSTRAINT students_classes0_FK
+	FOREIGN KEY (idClass)
+	REFERENCES classes(idClass);
+
+ALTER TABLE professor
+	ADD CONSTRAINT professor_classes0_FK
+	FOREIGN KEY (idClass)
+	REFERENCES classes(idClass);
+
+ALTER TABLE professor 
+	ADD CONSTRAINT professor_classes0_AK 
+	UNIQUE (idClass);
+
+ALTER TABLE classes
+	ADD CONSTRAINT classes_professor0_FK
+	FOREIGN KEY (idProfessor)
+	REFERENCES professor(idProfessor);
+
+ALTER TABLE classes 
+	ADD CONSTRAINT classes_professor0_AK 
+	UNIQUE (idProfessor);
+
+ALTER TABLE notes
+	ADD CONSTRAINT notes_students0_FK
+	FOREIGN KEY (idStudent)
+	REFERENCES students(idStudent);
+
+ALTER TABLE notes
+	ADD CONSTRAINT notes_subject1_FK
+	FOREIGN KEY (idSubject)
+	REFERENCES subject(idSubject);

@@ -1,0 +1,62 @@
+#------------------------------------------------------------
+#        Script MySQL.
+#------------------------------------------------------------
+
+
+#------------------------------------------------------------
+# Table: patient
+#------------------------------------------------------------
+
+CREATE TABLE patient(
+        idPatient          Int  Auto_increment  NOT NULL ,
+        patientLastName    Varchar (50) NOT NULL ,
+        patientFirstName   Varchar (50) NOT NULL ,
+        patientDateOfBirth Date NOT NULL
+	,CONSTRAINT patient_PK PRIMARY KEY (idPatient)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: speciality
+#------------------------------------------------------------
+
+CREATE TABLE speciality(
+        idSpeciality   Int  Auto_increment  NOT NULL ,
+        specialityName Varchar (50) NOT NULL
+	,CONSTRAINT speciality_PK PRIMARY KEY (idSpeciality)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: doctor
+#------------------------------------------------------------
+
+CREATE TABLE doctor(
+        idDoctor        Int  Auto_increment  NOT NULL ,
+        doctorLastName  Varchar (50) NOT NULL ,
+        doctorFirstName Varchar (50) NOT NULL ,
+        eMail           Varchar (50) NOT NULL ,
+        idSpeciality    Int NOT NULL
+	,CONSTRAINT doctor_PK PRIMARY KEY (idDoctor)
+
+	,CONSTRAINT doctor_speciality_FK FOREIGN KEY (idSpeciality) REFERENCES speciality(idSpeciality)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: appointment
+#------------------------------------------------------------
+
+CREATE TABLE appointment(
+        idAppointment    Int  Auto_increment  NOT NULL ,
+        dateApppointment Date NOT NULL ,
+        timeAppointment  Datetime NOT NULL ,
+        idDoctor         Int ,
+        idPatient        Int NOT NULL
+	,CONSTRAINT appointment_PK PRIMARY KEY (idAppointment)
+
+	,CONSTRAINT appointment_doctor_FK FOREIGN KEY (idDoctor) REFERENCES doctor(idDoctor)
+	,CONSTRAINT appointment_patient0_FK FOREIGN KEY (idPatient) REFERENCES patient(idPatient)
+	,CONSTRAINT appointment_patient_AK UNIQUE (idPatient)
+)ENGINE=InnoDB;
+

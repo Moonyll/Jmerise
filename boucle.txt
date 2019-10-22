@@ -1,0 +1,22 @@
+DECLARE @i INT 					-- i déclaré comment incrément type integer
+
+SET @i = 1 					-- i commence à 1
+
+WHILE (@i<=K) 					-- limité  à K
+
+BEGIN					--DEBUT BOUCLE
+	UPDATE [dbo].[table_name] 		-- Pour mise à jour...
+	SET 
+	
+	[column 1] = new value 1 ,		-- nouvelle valeurs.... 
+	[column 2] = new value 2 ,
+		.	
+		.
+		.
+
+	[column N] = new value N
+	
+	WHERE [table_name].[id]=@i		-- valeur de l'id = valeur de i
+
+SET @i= @i+1;					-- incrémentation
+END					-- FIN BOUCLE
